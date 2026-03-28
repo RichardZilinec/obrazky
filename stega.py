@@ -26,42 +26,34 @@ def picture_shreder(bin_message,pic,pic2):
 def picture_unshreder(pic):
     obr = Image.open(pic)
     pixels = obr.load()
-    
     bin_message = ""
     vysledny_text = ""
     index = 0
     
     while True:
-        # 1. Získame súradnice x, y rovnako ako pri šifrovaní
         x = index % obr.size[0]
         y = index // obr.size[0]
-        
-        # 2. Vytiahneme posledný bit z modrej zložky (index 2)
+
         blue_val = pixels[x, y][2]
         posledny_bit = bin(blue_val)[-1]
         bin_message += posledny_bit
-        
-        # 3. Každých 7 bitov skúsime previesť na znak
+
         if len(bin_message) == 7:
             znak = chr(int(bin_message, 2))
-            
-            # Ak narazíme na zarážku '#', končíme
+
             if znak == '#':
                 break
                 
             vysledny_text += znak
-            bin_message = "" # Vynulujeme zásobník pre ďalší znak
+            bin_message = ""
             
         index += 1
-        
-        # Bezpečnostná poistka pre prípad, že by sme prešli celý obrázok
+
         if index >= obr.size[0] * obr.size[1]:
             break
             
     return vysledny_text
 
-# Použitie:
-# print("Dekódovaná správa:", picture_unshreder('sprava_pre_priatela.png'))
 
 obr_in = "Nature_celebrating_India.png"
 obr_out = 'sprava_pre_priatela.png'

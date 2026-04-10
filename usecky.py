@@ -7,15 +7,29 @@
 # nacitaj suradnice a vytvorenie bieleho pozadia
 #
 from PIL import Image
-pic = Image.new("RGB",(20,20),"white")
+import sys
+canvas = 1000
+pic = Image.new("RGB",(canvas, canvas),"white")
 pixels = pic.load()
-a1 = int(input('zadaj x suradnicu prveho bodu: '))
-a2 = int(input('zadaj y suradnicu prveho bodu: '))
-b1 = int(input('zadaj x suradnicu druheho bodu: '))
-b2 = int(input('zadaj y suradnicu druheho bodu: '))
+
+def vstup(suradnica,poradie,limit):
+    temp_input = int(input('Zadaj '+suradnica+' suradnicu '+poradie+' bodu: '))
+    if temp_input > limit:
+        print('Hodnota moze byt medz 0..',limit)
+        sys.exit()
+    else:
+        return temp_input
+
+a1 = vstup('x','prveho',canvas)
+a2 = vstup('y','prveho',canvas)
+b1 = vstup('x','druheho',canvas)
+b2 = vstup('y','druheho',canvas)
 #
 #rozdelenie ci je x rovnake alebo nie
 #
+if a1 > b1:
+     a1,b1 = b1,a1
+     a2,b2 = b2,a2
 if a1 != b1:
 #
 # vypocet a, b
@@ -30,13 +44,23 @@ if a1 != b1:
 #
 #vypocitanie x, y + vykreslenie
 #
+        #print(a1,b1,a,b)
         for x in range(a1, b1 + 1):
             y = round((a*x)+b)
+            #print(y)
             pixels[x,y] = (0, 0, 0)        
     else:
         for y in range(a2, b2 + 1):
             x = round((y-b)/a)
             pixels[x,y] = (0, 0, 0)
+else:
+    a = 1
+    x = a1
+    if b2 < a2:
+         a2,b2 = b2,a2
+    for y in range(a2, b2+1):
+            pixels[x,y] = (0, 0, 0)        
+    
 #
 #vykreslenie grafu
 #

@@ -1,0 +1,33 @@
+#
+#
+#
+from PIL import Image, ImageDraw
+canvas = 400
+pic = Image.new("RGB",(canvas, canvas),"white")
+pixels = pic.load()
+#
+# mriezka
+#
+for o in range(0,11):
+    draw = ImageDraw.Draw(pic)
+    draw.line((0,o*20,canvas/2,o*20), fill = 128)
+    draw.line((o*20, 0, o*20, canvas/2), fill = 128)
+#
+# trojuholnik
+#
+for i in range (10,21):
+    draw = ImageDraw.Draw(pic)
+    draw.line((i*20, 0, canvas/2, (i*20 )-canvas/2), fill = 128)
+#
+# X
+#
+draw = ImageDraw.Draw(pic)
+draw.line((canvas/2, canvas/2, canvas, canvas), fill = 128)
+draw.line((canvas, canvas/2, canvas/2, canvas), fill = 128)
+#
+# schody
+# 
+for u in range(0,21):
+    draw.line((u*20, (canvas/2)+u*20, u*20, (canvas/2)+(u*20+20)), fill = 128)
+    draw.line((u*20, u*20+canvas/2 +20, u*20+20, u*20+canvas/2+20), fill = 128)
+pic.show()
